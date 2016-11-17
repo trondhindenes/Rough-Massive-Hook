@@ -1,0 +1,89 @@
+---
+- name: touch all things
+  hosts: all
+  tasks:
+    - name: setup
+      setup:
+- name: install consul
+  hosts: windows
+  handlers:
+    - name: restart consl-client
+      win_service:
+        name: consul-client
+        state: restarted
+  tasks:
+    - name: create apps directory
+      win_file:
+        path: C:/apps
+        state: directory
+    - name: download consul
+      win_get_url:
+        url: https://releases.hashicorp.com/consul/0.7.1/consul_0.7.1_windows_amd64.zip
+        dest: C:/apps/consul.zip
+        force: no
+    - name: Unzip a bz2 (BZip) file
+      win_unzip:
+        src: C:/apps/consul.zip
+        dest: C:/apps/consul
+        creates: C:/apps/consul/consul.exe
+    - name: create consul data dir
+      win_file:
+        path: C:/apps/consul/data
+        state: directory
+    - name: create consul log dir
+      win_file:
+        path: C:/apps/consul/log
+        state: directory
+    - name: create consul config dir
+      win_file:
+        path: C:/apps/consul/config
+        state: directory
+    - name: create consul checks dir
+      win_file:
+        path: C:/apps/consul/checks
+        state: directory
+    - name: template out consul client config file
+      template:
+        src: consul-client.json
+        dest: C:/apps/consul/config/consul.json
+        notify: restart consul-client
+    - name: template out consul client checks file
+      template:
+        src: servicecheck.ps1
+        dest: C:/apps/consul/checks/servicecheck.ps1
+    - name: install nssm
+      win_chocolatey:
+        name: nssm
+    - name: install consul client services
+      win_nssm:
+        name: consul-client
+        application: C:\apps\consul\consul.exe
+        app_parameters:
+          "agent -config-dir": C:\apps\consul\config
+        stdout_file: C:\apps\consul\log\consul.log
+        stderr_file: C:\apps\consul\log\error.log
+    - name: start consul service
+      win_service:
+        name: consul-client
+        state: started
+- name: api config
+  hosts: api
+  handlers:
+    - name: restart consul client
+      win_service:
+        name: consul-client
+        state: restarted
+  tasks:
+    - name: Template out api service def
+      template: 
+        src: consul-api-servicedef.json
+        dest: C:/apps/consul/config/api.json
+      notify: restart consul client
+- name: service config
+  hosts: service
+  tasks:
+    - name: Template out api service def
+      template: 
+        src: consul-service-servicedef.json
+        dest: C:/apps/consul/config/service.json
+      notify: restart consul client

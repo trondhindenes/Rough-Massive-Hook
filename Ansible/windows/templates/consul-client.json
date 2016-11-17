@@ -1,0 +1,6 @@
+{
+    "server": false,
+    "datacenter": "default",
+    "data_dir": "C:\\apps\\consul\\data",
+    "start_join": [ {% for host in groups['consul'] %}"{{ hostvars[host]['ansible_eth0']['ipv4']['address']}}"{% if not loop.last %},{% endif %}{% endfor %} ]
+}

@@ -1,0 +1,16 @@
+{
+    "bootstrap": false,
+    "server": true,
+    "datacenter": "default",
+    "data_dir": "opt/consul_data",
+    "log_level": "INFO",
+    "enable_syslog": true,
+    "start_join": [ {% for host in groups['consul'] %}"{{ hostvars[host]['ansible_eth0']['ipv4']['address']}}"{% if not loop.last %},{% endif %}{% endfor %} ],
+    "ui": true,
+    "ui_dir": "/opt/consul_ui",
+    "client_addr": "{{ ansible_all_ipv4_addresses[0] }}",
+    "recursors" : [ "10.0.0.2" ],
+    "ports" : {
+        "dns" : 53
+    }
+}

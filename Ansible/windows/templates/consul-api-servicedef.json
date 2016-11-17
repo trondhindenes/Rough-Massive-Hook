@@ -1,0 +1,15 @@
+{
+  "service": {
+    "name": "api",
+    "tags": ["master"],
+    "address": "{{ ansible_ip_addresses[0] }}",
+    "port": 80,
+    "enableTagOverride": false,
+    "checks": [
+      {
+        "script": "C:\\windows\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -file C:\\apps\\consul\\checks\\servicecheck.ps1",
+        "interval": "2s"
+      }
+    ]
+  }
+}

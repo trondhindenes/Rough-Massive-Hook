@@ -1,0 +1,19 @@
+defaultEntryPoints = ["http80"]
+[entryPoints]
+  [entryPoints.http80]
+  address = ":80"
+
+###
+# web configuration
+[web]
+address = ":8080"
+
+################################################################
+# Consul KV configuration backend
+################################################################
+[consul]
+endpoint = "10.0.0.131:8500"
+
+watch = true
+prefix = "traefik.local"
+
