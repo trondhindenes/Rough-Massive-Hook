@@ -1,0 +1,38 @@
+[
+    {
+        "name": "api",
+        "routes":[
+            {
+                "route": "api/",
+                "gitfilter": "branch:prod",
+                "deploymentpoilcy": "locked"
+            },
+            {
+                "route": "api/v1/",
+                "gitfilter": "branch:prod",
+                "deploymentpoilcy": "manual"
+            },
+            {
+                "route": "api/v2/",
+                "gitfilter": "branch:dev",
+                "deploymentpoilcy": "onbuild"
+            }
+            
+        ]
+    },
+    {
+        "name": "api.profile",
+        "routes":[
+            {
+                "route": "api/profile/v1",
+                "gitfilter": "tag:v1",
+                "deploymentpoilcy": "locked"
+            },
+            {
+                "route": "api/profile/v2",
+                "gitfilter": "branch:prod",
+                "deploymentpoilcy": "manual"
+            }
+        ]
+    }
+]
