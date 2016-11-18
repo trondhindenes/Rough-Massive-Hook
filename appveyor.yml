@@ -13,9 +13,7 @@ before_build:
 - cmd: >-
     NuGet.exe restore "apps\Project Rough Massive Hook.sln"
 - ps: >-
-    cd "env:"
-
-    ls
+    ls "env:"
 build:
   project: Apps/Project Rough Massive Hook.sln
   publish_wap: false
