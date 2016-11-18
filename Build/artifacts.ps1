@@ -12,6 +12,7 @@ foreach ($artifactName in $artifacts.keys) {
   $obj.branch_name = $env:APPVEYOR_REPO_BRANCH
   $obj.commit_message = $env:APPVEYOR_REPO_COMMIT_MESSAGE
   write-output $obj
-
-  invoke-restmethod -UseBasicParsing -ContentType "application/json" -Method post -Body ($obj | convertto-json) -uri $env:LONE_JUPITER_URL
+  $url = $env:LONE_JUPITER_URL
+  $url = $url + "/api/release"
+  invoke-restmethod -UseBasicParsing -ContentType "application/json" -Method post -Body ($obj | convertto-json) -uri $url
 }
