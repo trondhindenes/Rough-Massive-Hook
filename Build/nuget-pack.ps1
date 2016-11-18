@@ -1,4 +1,9 @@
+Write-output "Env variables:"
+ls env:
+
 Write-Output "Setting .nuspec version tag to $versionStr"
+
+
 
 $nuspecfiles = get-childitem *.nuspec -Recurse
 foreach ($file in $nuspecfiles)
