@@ -20,7 +20,8 @@ build:
   publish_nuget: false
   verbosity: minimal
 after_test:
-  - ps: .\build\nuget-pack.ps1
+# uncomment this to generate some nugets that aren't working that well anyway
+#  - ps: .\build\nuget-pack.ps1
 before_package:
 - ps: >-
     $names = invoke-restmethod "http://www.mockaroo.com/api/generate.json?key=34fe82c0&count=1&schema=name" -contenttype "application/json"
