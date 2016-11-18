@@ -1,3 +1,5 @@
 foreach ($artifactName in $artifacts.keys) {
-  $artifacts[$artifactName]
+  $artifact = $artifacts[$artifactName]
+  $artifactName = $artifact.name 
+  Write-output "pushing artifact metadata for $artifactName"
 }
