@@ -1,0 +1,53 @@
+version: 0.1.{build}
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+skip_tags: true
+configuration: Release
+before_build:
+- cmd: >-
+    set
+
+    NuGet.exe restore "apps\Project Rough Massive Hook.sln"
+build:
+  project: Apps/Project Rough Massive Hook.sln
+  publish_wap: false
+  publish_nuget: false
+  verbosity: minimal
+before_package:
+- ps: >-
+    $names = invoke-restmethod "http://www.mockaroo.com/api/generate.json?key=34fe82c0&count=1&schema=name" -contenttype "application/json"
+
+    $projectname = $names.first_name + "_" + $names.last_name
+
+    $env:releasename = $projectname
+
+    write-output $projectname
+after_build:
+- ps: >-
+    Get-Location
+
+    get-childitem *.zip,*.nu* -Recurse | select -expand FullName
+artifacts:
+- path: Backend.zip
+deploy:
+- provider: GitHub
+  tag: v$(appveyor_build_version)
+  auth_token:
+    secure: MFQ9cL8G9sQbLaQz5s+2z7MoQDXJStaEd9AsdbJfsHUBPgKvTmUIuag+LMYs9lqQ
+  artifact: api.zip, backend.zip
+  force_update: false
+  on:
+    DEPLOY: true
+- provider: NuGet
+  server: https://ci.appveyor.com/nuget/trondhindenes-u5u9eysub3v1/api/v2/package
+  api_key:
+    secure: oO6Df2+dprVOVelMgtBIjI44YTt9t+b38yJR1SzgfwI=
+  artifact: '*'
+  on:
+    DEPLOY: true
