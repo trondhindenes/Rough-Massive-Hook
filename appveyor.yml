@@ -1,6 +1,10 @@
 version: 0.1.{build}
 
-init:
+
+environment:
+  LONE_JUPITER_URL: http://things
+
+#init:
 #  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 assembly_info:
@@ -34,12 +38,12 @@ before_package:
     $env:releasename = $projectname
 
     write-output $projectname
-after_build:
+#after_build:
 #- ps: >-
 #    Get-Location
 #
 #    get-childitem *.zip,*.nu* -Recurse | select -expand FullName
-artifacts:
+
 deploy:
 - provider: GitHub
   tag: v$(appveyor_build_version)
