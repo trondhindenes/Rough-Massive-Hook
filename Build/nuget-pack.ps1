@@ -10,7 +10,7 @@ foreach ($file in $nuspecfiles)
 {
     $fullname = $file.fullname
     Write-Output "Found nuspec file at $fullname"
-    & nuget.exe "pack $fullname -properties owners=$env:APPVEYOR_REPO_COMMIT_AUTHOR;version=$env:APPVEYOR_BUILD_VERSION -verbose"
+    & nuget.exe pack $fullname -properties "owners=$env:APPVEYOR_REPO_COMMIT_AUTHOR;version=$env:APPVEYOR_BUILD_VERSION -verbose"
 
 }
 
