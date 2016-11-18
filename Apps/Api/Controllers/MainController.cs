@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Api.Models;
+using Models;
 using System.Configuration;
 
 namespace Api.Controllers
@@ -19,9 +19,21 @@ namespace Api.Controllers
             String url = ConfigurationManager.AppSettings["backend"];
             string backendServerNameUrl = String.Format("{0}/api/ServerName", url);
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            var webResult = client.DownloadString(backendServerNameUrl);
+            string webResult = "";
+            Thing thisThing = new Thing();
+            try
+            {
+                webResult = client.DownloadString(backendServerNameUrl);
+                thisThing = Newtonsoft.Json.JsonConvert.DeserializeObject<Thing>(webResult);
+            }
+            catch (Exception)
+            {
+                thisThing.localComputerName = "Error getting stuff";
+                thisThing.localHostHeader = "Error getting stuff";
+            }
+            
 
-            Thing thisThing = Newtonsoft.Json.JsonConvert.DeserializeObject<Thing>(webResult);
+            
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
