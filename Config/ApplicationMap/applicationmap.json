@@ -5,17 +5,59 @@
             {
                 "route": "api/",
                 "gitfilter": "branch:prod",
-                "deploymentpoilcy": "locked"
+                "deploymentpolicy": "locked",
+                "targettags":[
+                    {
+                        "name": "environment",
+                        "value": "prod"
+                    },
+                    {
+                        "name": "servicefamily",
+                        "value": "services-external"
+                    },
+                    {
+                        "name": "servicegroup",
+                        "value": "api"
+                    }
+                ]
             },
             {
                 "route": "api/v1/",
                 "gitfilter": "branch:prod",
-                "deploymentpoilcy": "manual"
+                "deploymentpolicy": "manual",
+                "targettags":[
+                    {
+                        "name": "environment",
+                        "value": "prod"
+                    },
+                    {
+                        "name": "servicefamily",
+                        "value": "services-external"
+                    },
+                    {
+                        "name": "servicegroup",
+                        "value": "api"
+                    }
+                ]
             },
             {
                 "route": "api/v2/",
                 "gitfilter": "branch:dev",
-                "deploymentpoilcy": "onbuild"
+                "deploymentpolicy": "onbuild",
+                "targettags":[
+                    {
+                        "name": "environment",
+                        "value": "prod"
+                    },
+                    {
+                        "name": "servicefamily",
+                        "value": "services-external"
+                    },
+                    {
+                        "name": "servicegroup",
+                        "value": "api"
+                    }
+                ]
             }
             
         ]
@@ -26,12 +68,40 @@
             {
                 "route": "api/profile/v1",
                 "gitfilter": "tag:v1",
-                "deploymentpoilcy": "locked"
+                "deploymentpolicy": "locked",
+                "targettags":[
+                    {
+                        "name": "environment",
+                        "value": "prod"
+                    },
+                    {
+                        "name": "servicefamily",
+                        "value": "services-external"
+                    },
+                    {
+                        "name": "servicegroup",
+                        "value": "api"
+                    }
+                ]
             },
             {
                 "route": "api/profile/v2",
                 "gitfilter": "branch:prod",
-                "deploymentpoilcy": "manual"
+                "deploymentpolicy": "manual",
+                "targettags":[
+                    {
+                        "name": "environment",
+                        "value": "prod"
+                    },
+                    {
+                        "name": "servicefamily",
+                        "value": "services-external"
+                    },
+                    {
+                        "name": "servicegroup",
+                        "value": "api"
+                    }
+                ]
             }
         ]
     }
