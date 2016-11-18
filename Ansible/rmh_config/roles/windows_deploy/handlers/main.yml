@@ -1,0 +1,6 @@
+# file: roles/windows_deploy/handlers/main.yml
+---
+# For example,
+# 
+# - name: restart ntpd
+#   service: name=ntpd state=restarted

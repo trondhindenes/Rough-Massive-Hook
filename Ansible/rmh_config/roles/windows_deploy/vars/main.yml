@@ -1,0 +1,4 @@
+# file: roles/windows_deploy/vars/main.yml
+---
+#
+# foo: bar
