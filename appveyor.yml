@@ -1,0 +1,69 @@
+version: 0.1.{build}
+
+
+environment:
+  LONE_JUPITER_URL: http://ec2-54-93-51-229.eu-central-1.compute.amazonaws.com
+  STORAGE_KEY:
+    secure: kyOBWvm3rih+H77im8bUIx8wNM3GPXt49po/QEsVQ1u29IendG29lFULUYp0InWuJSt9NjWN3YO698ADnTYN5M0AdtkfqTz9QCJRqhS9d9/10TsunaGmNDG4pnHHxXL0
+  STORAGE_NAME:
+    secure: h4p+6btcoA6QzWmsyS7Q8w==
+
+init:
+#  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+skip_tags: true
+configuration: Release
+before_build:
+- cmd: >-
+    NuGet.exe restore "apps\Project Rough Massive Hook.sln"
+#- ps: >-
+#    ls "env:"
+build:
+  project: Apps/Project Rough Massive Hook.sln
+  publish_wap: true
+  publish_nuget: false
+  verbosity: minimal
+after_test:
+# uncomment this to generate some nugets that aren't working that well anyway
+#  - ps: .\build\nuget-pack.ps1
+before_package:
+- ps: >-
+    $names = invoke-restmethod "http://www.mockaroo.com/api/generate.json?key=34fe82c0&count=1&schema=name" -contenttype "application/json"
+
+    $projectname = $names.first_name + "_" + $names.last_name
+
+    $env:releasename = $projectname
+
+    write-output $projectname
+#after_build:
+#- ps: >-
+#    Get-Location
+#
+#    get-childitem *.zip,*.nu* -Recurse | select -expand FullName
+
+deploy:
+- provider: GitHub
+  tag: v$(appveyor_build_version)
+  auth_token:
+    secure: MFQ9cL8G9sQbLaQz5s+2z7MoQDXJStaEd9AsdbJfsHUBPgKvTmUIuag+LMYs9lqQ
+  artifact: api.zip, backend.zip
+  force_update: false
+  on:
+    DEPLOY: true
+- provider: NuGet
+  server: https://ci.appveyor.com/nuget/trondhindenes-u5u9eysub3v1/api/v2/package
+  api_key:
+    secure: oO6Df2+dprVOVelMgtBIjI44YTt9t+b38yJR1SzgfwI=
+  artifact: '*'
+  on:
+    DEPLOY: true
+on_finish:
+  - ps: ./build/artifacts.ps1
+#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
