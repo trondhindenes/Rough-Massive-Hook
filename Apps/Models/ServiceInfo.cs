@@ -7,6 +7,8 @@ namespace Models
 {
     public class ServiceInfo
     {
+        public int requestPort { get; set; }
+
         public String controllerName { get; set; }
         public String requestPath { get; set; }
         public String apiVersionString { get; set; }

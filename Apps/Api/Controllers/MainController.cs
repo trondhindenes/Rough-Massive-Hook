@@ -43,6 +43,7 @@ namespace Api.Controllers
             thisServiceInfo.apiVersionString = ConfigurationManager.AppSettings["apiVersionString"];
             thisServiceInfo.controllerName = "main";
             thisServiceInfo.requestPath = Request.RequestUri.PathAndQuery;
+            thisServiceInfo.requestPort = Request.RequestUri.Port;
             thisServiceInfo.apiServer = System.Environment.GetEnvironmentVariable("computername");
             thisServiceInfo.backendServer = thisThing.localComputerName;
             thisServiceInfo.backendServerHostHeader = thisThing.localHostHeader;
