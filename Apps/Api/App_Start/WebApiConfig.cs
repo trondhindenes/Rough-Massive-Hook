@@ -23,7 +23,7 @@ namespace Api
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { controller = "main", id = RouteParameter.Optional }
             );
         }
     }
