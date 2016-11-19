@@ -12,7 +12,7 @@ foreach ($artifactName in $artifacts.keys) {
   $obj.commit_author = $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL
   $obj.commit_tag = $env:APPVEYOR_REPO_TAG
   $obj.package_version = $env:APPVEYOR_BUILD_VERSION
-  $obj.artifact_url = $artifact.url
+  
   $obj.branch_name = $env:APPVEYOR_REPO_BRANCH
   $obj.commit_message = $env:APPVEYOR_REPO_COMMIT_MESSAGE
   write-output $obj
@@ -20,7 +20,7 @@ foreach ($artifactName in $artifacts.keys) {
   $url = $url + "/api/release"
 
   $FileName = "$($obj.package_name)_$($obj.branch_name)_$($obj.package_version).zip"
-  
+  $obj.artifact_url = "https://$($env:STORAGE_NAME)/.blob.core.windows.net/artifacts/$($FileName)"
   Set-AzureStorageBlobContent -File ($artifact.path)  -Container "artifacts" -Blob $FileName -Context $AzureContext
 
   invoke-restmethod -UseBasicParsing -ContentType "application/json" -Method post -Body ($obj | convertto-json) -uri $url
