@@ -1,3 +1,4 @@
+$ErrorActionPreference = "Stop"
 Disable-AzureDataCollection
 $AzureContext = New-AzureStorageContext -StorageAccountName $env:STORAGE_NAME -StorageAccountKey $env:STORAGE_KEY
 $AzureContext
@@ -20,7 +21,7 @@ foreach ($artifactName in $artifacts.keys) {
   $url = $url + "/api/release"
 
   $FileName = "$($obj.package_name)_$($obj.branch_name)_$($obj.package_version).zip"
-  $obj.artifact_url = "https://$($env:STORAGE_NAME)/.blob.core.windows.net/artifacts/$($FileName)"
+  $obj.artifact_url = "https://$($env:STORAGE_NAME).blob.core.windows.net/artifacts/$($FileName)"
   Set-AzureStorageBlobContent -File ($artifact.path)  -Container "artifacts" -Blob $FileName -Context $AzureContext
 
   invoke-restmethod -UseBasicParsing -ContentType "application/json" -Method post -Body ($obj | convertto-json) -uri $url
