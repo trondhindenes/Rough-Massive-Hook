@@ -1,4 +1,7 @@
+Disable-AzureDataCollection
 $AzureContext = New-AzureStorageContext -StorageAccountName $env:STORAGE_NAME -StorageAccountKey $env:STORAGE_KEY
+$AzureContext
+
 foreach ($artifactName in $artifacts.keys) {
   $artifact = $artifacts[$artifactName]
   $artifactName = $artifact.name 
