@@ -12,7 +12,7 @@ foreach ($artifactName in $artifacts.keys) {
   $type = $artifact.type
   $artifactName = $artifact.name 
   Write-output "pushing artifact metadata for $artifactName"
-  $obj = "" | select commit_id, package_name, commit_author, commit_tag, package_version, artifact_url, branch_name, commit_message
+  $obj = "" | select commit_id, package_name, commit_author, commit_tag, package_version, artifact_url, branch_name, commit_message, artifact_type
   $obj.commit_id = $env:APPVEYOR_REPO_COMMIT
   $obj.package_name = $artifactName
   $obj.commit_author = $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL
