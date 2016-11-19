@@ -33,7 +33,8 @@ class ApiArtifact(Resource):
                 "commit_author": artifact['commit_author'],
                 "commit_message": artifact['commit_message'],
                 "commit_tag": artifact['commit_tag'],
-                "artifact_url": artifact['artifact_url']
+                "artifact_url": artifact['artifact_url'],
+                "artifact_type": artifact['artifact_type']
             }
 
             existing_record = \
