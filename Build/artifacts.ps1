@@ -1,3 +1,4 @@
+$AzureContext = New-AzureStorageContext -StorageAccountName $env:STORAGE_NAME -StorageAccountKey $env:STORAGE_KEY
 foreach ($artifactName in $artifacts.keys) {
   $artifact = $artifacts[$artifactName]
   $artifactName = $artifact.name 
@@ -14,5 +15,11 @@ foreach ($artifactName in $artifacts.keys) {
   write-output $obj
   $url = $env:LONE_JUPITER_URL
   $url = $url + "/api/release"
+
+  $FileName = "$($obj.package_name)_$($obj.branch_name)_$($obj.package_version).zip"
+  
+  Set-AzureStorageBlobContent -File $artifact.path  -Container "artifacts" ` 
+        -Blob $FileName -Context $AzureContext
+
   invoke-restmethod -UseBasicParsing -ContentType "application/json" -Method post -Body ($obj | convertto-json) -uri $url
 }
