@@ -1,6 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 #really disable stupid azure data collection
+New-Item "$($env:appdata)\Windows Azure Powershell\AzureDataCollectionProfile.json" -ItemType File -Force
 Set-content "$($env:appdata)\Windows Azure Powershell\AzureDataCollectionProfile.json" -Value '{"enableAzureDataCollection":false}'
 
 $AzureContext = New-AzureStorageContext -StorageAccountName $env:STORAGE_NAME -StorageAccountKey $env:STORAGE_KEY
