@@ -21,8 +21,7 @@ foreach ($artifactName in $artifacts.keys) {
 
   $FileName = "$($obj.package_name)_$($obj.branch_name)_$($obj.package_version).zip"
   
-  Set-AzureStorageBlobContent -File $artifact.path  -Container "artifacts" ` 
-        -Blob $FileName -Context $AzureContext
+  Set-AzureStorageBlobContent -File ($artifact.path)  -Container "artifacts" -Blob $FileName -Context $AzureContext
 
   invoke-restmethod -UseBasicParsing -ContentType "application/json" -Method post -Body ($obj | convertto-json) -uri $url
 }
