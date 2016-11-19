@@ -19,6 +19,7 @@ class ApiArtifact(Resource):
             artifacts.append(af)
         return artifacts
 
+
     def post(self):
         artifact = request.get_json(force=True)
         RethinkDbHelper.ensure_database_and_table(rethinkdb_host, rethinkdb_port, rethinkdb_db, "artifacts")
@@ -37,7 +38,7 @@ class ApiArtifact(Resource):
 
             existing_record = \
                 r.db(rethinkdb_db).table("artifacts").filter({'commit_id': artifact['commit_id'],
-                        'package_name': artifact['package_name']}).run()
+                        'package_name': artifact['package_name'], 'package_version': artifact['package_version']}).run()
 
             if existing_record.items.__len__() == 0:
                 result = r.db(rethinkdb_db).table("artifacts").insert(insert_obj).run();
@@ -52,3 +53,5 @@ class ApiArtifact(Resource):
 
 
 api.add_resource(ApiArtifact, '/api/release')
+
+

@@ -1,40 +1,10 @@
 ---
 - name: api
   routes:
-  - route: api/
-    gitfilter: branch:prod
-    deploymentpolicy: locked
-    targettags:
-    - name: environment
-      value: prod
-    - name: servicefamily
-      value: services-external
-    - name: servicegroup
-      value: api
   - route: api/v1/
-    gitfilter: branch:prod
-    deploymentpolicy: manual
-    targettags:
-    - name: environment
-      value: prod
-    - name: servicefamily
-      value: services-external
-    - name: servicegroup
-      value: api
-  - route: api/v2/
-    gitfilter: branch:dev
-    deploymentpolicy: onbuild
-    targettags:
-    - name: environment
-      value: prod
-    - name: servicefamily
-      value: services-external
-    - name: servicegroup
-      value: api
-- name: api.profile
-  routes:
-  - route: api/profile/v1
-    gitfilter: tag:v1
+    gitfilter: 
+      branch: master
+      version: "0.1.57"
     deploymentpolicy: locked
     targettags:
     - name: environment
@@ -43,9 +13,12 @@
       value: services-external
     - name: servicegroup
       value: api
-  - route: api/profile/v2
-    gitfilter: branch:prod
-    deploymentpolicy: manual
+
+  - route: api/v2/
+    gitfilter: 
+      branch: master
+      version: latest
+    deploymentpolicy: onbuild
     targettags:
     - name: environment
       value: prod
