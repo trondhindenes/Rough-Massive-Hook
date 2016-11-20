@@ -27,7 +27,11 @@
         dest: /opt/traefik/traefik.toml
       register: traefik_config
       notify: Deploy or redeploy docker container 
-      
+    - name: check if docker is running
+      shell: docker ps -q
+      register: docker_ps
+      changed_when: docker_ps.stdout == ''
+      notify: Deploy or redeploy docker container
 #    - block:
 #        #Trying to idempodency with handlers instead
 #      when: traefik_config.changed and not docker_created.changed
@@ -36,7 +40,7 @@
       docker_container:
         name: traefik
         image: traefik
-        state: present
+        state: started
         pull: yes
         restart_policy: always
         published_ports:
