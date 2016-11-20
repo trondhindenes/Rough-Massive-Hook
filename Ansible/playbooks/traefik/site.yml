@@ -36,7 +36,7 @@
 #        #Trying to idempodency with handlers instead
 #      when: traefik_config.changed and not docker_created.changed
   handlers:
-    - name: Deploy or redeploy docker container
+    - name: Deploy or redeploy or restart docker container
       docker_container:
         name: traefik
         image: traefik
