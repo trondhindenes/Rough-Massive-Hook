@@ -17,9 +17,9 @@
       register: traefik_config
       notify: Deploy or redeploy docker container 
       
-    - block:
-        #Trying to idempodency with handlers instead
-      when: traefik_config.changed and not docker_created.changed
+#    - block:
+#        #Trying to idempodency with handlers instead
+#      when: traefik_config.changed and not docker_created.changed
   handlers:
     - name: Deploy or redeploy docker container
       docker_container:
