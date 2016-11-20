@@ -63,15 +63,31 @@ class ServerSelector(object):
         return matching_servers
 
     @staticmethod
-    def get_free_port(server_name, root_url):
+    def get_free_port(server_name, root_url, start_port):
         url = root_url + "api/deployments/server/" + server_name
         result = requests.get(url)
         data = json.loads(result.content)
 
-        test_port = 7000
+        test_port = int(start_port)
         while True:
-            port_free = [x for x in data if x['local_port'] == test_port]
+            port_free = [x for x in data if int(x['local_port']) == test_port]
             if port_free.__len__() == 0:
                 return test_port
             else:
                 test_port = test_port + 1
+
+    @staticmethod
+    def create_reservation(candidate, appmap, root_url):
+        url = root_url + "api/deployments/create/" + appmap['name']
+        payload = {
+            "deployment_name": appmap['name'],
+            "local_port": candidate['port'],
+            "package_branch": appmap['gitfilter']['branch'],
+            "package_version": appmap['gitfilter']['version'],
+            "server": candidate['name'],
+            "status": "reserved"
+        }
+
+        result = requests.post(url, data=json.dumps(payload))
+        result_data = json.loads(result.content)
+        return result_data

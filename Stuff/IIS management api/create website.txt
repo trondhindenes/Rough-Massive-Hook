@@ -1,0 +1,14 @@
+POST https://localhost:55539/api/webserver/websites?fields=*,application_pool.name,application_pool.status,application_pool.identity,application_pool.pipeline_mode,application_pool.managed_runtime_version HTTP/1.1
+Host: localhost:55539
+Connection: keep-alive
+Content-Length: 244
+accept: application/hal+json
+Origin: https://manage.iis.net
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36
+Access-Token: Bearer <token>
+content-type: application/json
+Referer: https://manage.iis.net/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.8
+
+{"name":"test","physical_path":"C:\\inetpub\\wwwroot","bindings":[{"hostname":"","port":7000,"ip_address":"*","is_https":false,"certificate":null,"binding_information":null,"protocol":"http"}],"application_pool":{"id":"ZsvLz8FUH1HMo9p2ET_WGg

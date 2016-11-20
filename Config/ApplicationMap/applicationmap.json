@@ -1,9 +1,10 @@
   {
     "name": "api-v1",
     "route": "api/v1/",
+    "package": "api",
     "gitfilter": {
       "branch": "master",
-      "version": "0.1.70"
+      "version": "0.1.72"
     },
     "deploymentpolicy": "locked",
     "targettags": [

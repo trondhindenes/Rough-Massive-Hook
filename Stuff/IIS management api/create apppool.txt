@@ -1,0 +1,14 @@
+POST https://localhost:55539/api/webserver/application-pools HTTP/1.1
+Host: localhost:55539
+Connection: keep-alive
+Content-Length: 15
+accept: application/hal+json
+Origin: https://manage.iis.net
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36
+Access-Token: Bearer <token>
+content-type: application/json
+Referer: https://manage.iis.net/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.8
+
+{"name":"test"}

@@ -10,7 +10,7 @@ import json
 rethinkdb_host = appconfig['rethinkdb_host']
 rethinkdb_port = appconfig['rethinkdb_port']
 rethinkdb_db = appconfig['rethinkdb_db']
-
+serverpool_port_start = appconfig['serverpool_port_start']
 
 
 class ApiDeploymentSelector(Resource):
@@ -47,6 +47,7 @@ class ApiDeploymentSelector(Resource):
         resultobj['current_deployments'] = current_deployments_count
         resultobj['desired_deployments'] = desired_instancecount
 
+        deployment_candidates = []
         if current_deployments_count < desired_instancecount:
             needed_deployments = desired_instancecount - current_deployments_count
             deployment_candidates = ServerSelector.get_deployment_candidates(rethinkdb_host, rethinkdb_port,
@@ -54,15 +55,12 @@ class ApiDeploymentSelector(Resource):
                                                                              needed_deployments, current_deployments)
 
             for candidate in deployment_candidates:
-                port = ServerSelector.get_free_port(candidate['name'], request.url_root)
-                candidate['free_port'] = port
-
-
-
-
-
+                port = ServerSelector.get_free_port(candidate['name'], request.url_root, serverpool_port_start)
+                candidate['port'] = port
+                result = ServerSelector.create_reservation(candidate, appmap, request.url_root)
 
 
         return deployment_candidates
+
 
 api.add_resource(ApiDeploymentSelector, '/api/deploymentselector/<string:appmap_name>')

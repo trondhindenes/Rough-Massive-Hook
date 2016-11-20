@@ -23,6 +23,8 @@ try:
     appconfig['rethinkdb_host'] = config.get("Default", "rethinkdb_host")
     appconfig['rethinkdb_port'] = config.get("Default", "rethinkdb_port")
     appconfig['rethinkdb_db'] = config.get("Default", "rethinkdb_db")
+    appconfig['serverpool_port_start'] = config.get("Default", "serverpool_port_start")
+
 except Exception, e:
     raise ValueError(str.format("error reading ini file {0}: {1}", config_file_path), str(e))
 

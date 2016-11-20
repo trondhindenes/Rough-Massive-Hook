@@ -1,0 +1,4 @@
+---
+ - name: thing 
+   : pkg=ntp state=installed
+   tags: ntp

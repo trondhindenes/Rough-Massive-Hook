@@ -1,8 +1,10 @@
+Param(
+    $url
+)
 try{
-    invoke-webrequest http://localhost -UseBasicParsing -ErrorAction Stop
+    invoke-webrequest $url -UseBasicParsing -ErrorAction Stop
 }
 catch
 {
     throw "error"
 }
-
