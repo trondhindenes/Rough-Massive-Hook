@@ -73,17 +73,17 @@
       win_service:
         name: consul-client
         state: restarted
-  tasks:
-    - name: Template out api service def
-      template: 
-        src: consul-api-servicedef.json
-        dest: C:/apps/consul/config/api.json
-      notify: restart consul client
-- name: service config
-  hosts: service
-  tasks:
-    - name: Template out api service def
-      template: 
-        src: consul-service-servicedef.json
-        dest: C:/apps/consul/config/service.json
-      notify: restart consul client
+#  tasks:
+#    - name: Template out api service def
+#      template: 
+#        src: consul-api-servicedef.json
+#        dest: C:/apps/consul/config/api.json
+#      notify: restart consul client
+#- name: service config
+#  hosts: service
+#  tasks:
+#    - name: Template out api service def
+#      template: 
+#        src: consul-service-servicedef.json
+#        dest: C:/apps/consul/config/service.json
+#      notify: restart consul client

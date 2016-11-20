@@ -1,3 +1,4 @@
 ---
 - include: sd/site.yml
 - include: windows/site.yml
+- include: traefik/site.yml
