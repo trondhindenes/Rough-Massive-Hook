@@ -17,10 +17,14 @@
   hosts: traefik
   serial: 1
   tasks:
+    - name: create traefik config file folder
+      file:
+        name: /opt/traefik
+        state: directory
     - name: deploy config file
       template:
         src: traefik.toml
-        dest: $PWD/traefik.toml
+        dest: /opt/traefik/traefik.toml
       register: traefik_config
       notify: Deploy or redeploy docker container 
       
@@ -39,5 +43,5 @@
           - 80:80
           - 8080:8080
         volumes:
-          - $PWD/traefik.toml:/etc/traefik/traefik.toml
+          - /opt/traefik/traefik.toml:/etc/traefik/traefik.toml
       register: docker_created
