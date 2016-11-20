@@ -21,7 +21,7 @@
         url: https://releases.hashicorp.com/consul/0.7.1/consul_0.7.1_windows_amd64.zip
         dest: C:/apps/consul.zip
         force: no
-    - name: Unzip a bz2 (BZip) file
+    - name: Unzip a consul
       win_unzip:
         src: C:/apps/consul.zip
         dest: C:/apps/consul
