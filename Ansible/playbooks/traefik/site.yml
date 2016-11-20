@@ -2,9 +2,16 @@
 - name: Configure traefik nodes
   hosts: traefik
   tasks:
-    - name: Install docker
+    - name: Install docker engine
       yum:
         name: docker
+    - name: Make sure docker engine is running
+      service:
+        name: docker
+        state: started
+    - name: Install docker support for python
+      pip:
+        name: docker-py
 
 - name: Configure traefik nodes
   hosts: traefik
