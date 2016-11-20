@@ -41,6 +41,7 @@
         name: traefik
         image: traefik
         state: started
+        restart: yes
         pull: yes
         restart_policy: always
         published_ports:
