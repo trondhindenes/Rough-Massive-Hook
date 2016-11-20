@@ -3,6 +3,8 @@
   hosts: traefik
   tasks:
     - name: Install docker
+      yum:
+        name: docker
 
 - name: Configure traefik nodes
   hosts: traefik
