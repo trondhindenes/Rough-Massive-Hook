@@ -3,7 +3,7 @@
   route: api/v1/
   gitfilter: 
     branch: master
-    version: "0.1.57"
+    version: "0.1.70"
   deploymentpolicy: locked
   targettags:
   - name: environment
@@ -12,3 +12,4 @@
     value: services-external
   - name: servicegroup
     value: api
+  instancecount: 2

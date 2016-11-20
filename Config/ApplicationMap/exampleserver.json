@@ -1,12 +1,6 @@
-  {
-    "name": "api-v1",
-    "route": "api/v1/",
-    "gitfilter": {
-      "branch": "master",
-      "version": "0.1.70"
-    },
-    "deploymentpolicy": "locked",
-    "targettags": [
+{
+    "name":  "EC2AMAZ-KEBS2AU",
+    "servertags": [
       {
         "name": "environment",
         "value": "prod"
@@ -20,5 +14,7 @@
         "value": "api"
       }
     ],
-    "instancecount": 2
-  }
+    "totaldeploymentcount": 1,
+    "relativeserverweight": 1,
+    "loadhistory": 1 
+}

@@ -29,4 +29,7 @@ except Exception, e:
 api = Api(app)
 import lone_jupiter.api_artifact
 import lone_jupiter.api_artifactdetail
+import lone_jupiter.api_deployment
+import lone_jupiter.api_applicationmap
+import lone_jupiter.api_deploymentselector
 
