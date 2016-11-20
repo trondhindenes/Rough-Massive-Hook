@@ -12,7 +12,7 @@
   tasks:
     - name: deploy config file
       template:
-        src: ../../traefik/traefik.toml
+        src: traefik.toml
         dest: $PWD/traefik.toml
       register: traefik_config
       notify: Deploy or redeploy docker container 
