@@ -62,6 +62,8 @@ An example of this is Octopus Deploy jobs which perform a plethora of config tra
 Although this certainly can be implemented in Rough Massive Hook aswell, the example apps attempt to deal with config according to the following rule:
 - Any config which differs between environments/servers/apps should be placed in Consul instead of directly set in code.
 
+This allows the production of artifacts which are completely agnostic to the environment they run on, and mimcs the use of Environment variable injection in Docker-based deployments.
+
 
 
 
