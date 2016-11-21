@@ -20,7 +20,7 @@ Function Get-Blob
     return "C:\Staging\$($BlobPath)"
 }
 
-$LoneJupiterUrl = "http://ec2-52-59-242-16.eu-central-1.compute.amazonaws.com"
+$LoneJupiterUrl = "http://ec2-54-93-41-146.eu-central-1.compute.amazonaws.com"
 
 $url = "$($LoneJupiterUrl)/api/applicationmaps/"
 $AppMaps = Invoke-RestMethod -Uri $url -UseBasicParsing
@@ -81,4 +81,6 @@ foreach ($Deployment in $PendingDeployments)
     New-item "C:\apps\consul\config\$($LocalFolder).json" -Force
     set-content "C:\apps\consul\config\$($LocalFolder).json" -Value ($ConsulService | convertto-json -Depth 99) -Force
 
+    #reload consul
+    & C:\apps\consul\consul reload
 }

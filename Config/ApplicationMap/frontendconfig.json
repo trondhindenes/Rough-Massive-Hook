@@ -1,0 +1,25 @@
+{
+    "name": "api",
+    "routes":[
+        {
+            "name":"v1",
+            "rules":{
+                "Host": "api-weighted.publicdomain.local",
+                "PathPrefixStrip": "/api/v1"
+            }
+        }
+    ],
+    "backend":"api-v1-master",
+    "virtualservers": [
+        {
+            "name": "api-v1-master",
+            "deployment": "api-v1-master",
+            "weight": 100
+        },
+        {
+            "name": "api-v1-devel",
+            "deployment": "api-v1-devel",
+            "weight": 10
+        }
+    ]
+}

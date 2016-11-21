@@ -1,4 +1,0 @@
-# file: site.yml
----
-- include: consul.yml
-- include: traefik.yml
