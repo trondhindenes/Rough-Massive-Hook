@@ -55,6 +55,13 @@ App placement (the which app goes where) is abstracted away using tags and optio
 4. The server targeted in the deployment is then instructed to download the required artifact and instal it. Upon installation, the IIS hosts's Consul config folder is updated with the added instance
 5. The Load Balancing system picks up the added service instance when Consul receives a "green" healthcheck from the service, and traffic starts flowing to the instance.
 
+# Dealing with config
+Traditional build/deploy pipelines usually "know" where an app ends up, and is able to inject custom configuration based on this, especially in the deploy step.
+It is my strong opinion that this capability has morped into an anti-pattern, where too much "smarts" is injected into the deployment pipeline to cover up upstream problems.
+An example of this is Octopus Deploy jobs which perform a plethora of config transformations on an app as it's deployed.
+Although this certainly can be implemented in Rough Massive Hook aswell, the example apps attempt to deal with config according to the following rule:
+- Any config which differs between environments/servers/apps should be placed in Consul instead of directly set in code.
+
 
 
 
