@@ -7,7 +7,8 @@ without actually using any container service in the app layer.
 
 ## What does this mean? 
 Here's a simple container-based infrastructure:
-(https://raw.githubusercontent.com/trondhindenes/Rough-Massive-Hook/master/docs/pics/containers.png)
+
+![containers](https://raw.githubusercontent.com/trondhindenes/Rough-Massive-Hook/master/docs/pics/containers.png "Containers")
 
 Containerized apps (aka microservice instances) run on one or several container hosts. Client traffic is automatically distributed
 to the right container using a load balancer in front of the container cluster. Some setups use a load balancer which is running on each 
@@ -19,7 +20,8 @@ system such as Consul or etcd.
 
 Rough Massive Hook takes the same approach, with a few key differences:
 Firstly, since containers are not used IIS web apps serve as microservices, running on one or multiple hosts:
-(https://raw.githubusercontent.com/trondhindenes/Rough-Massive-Hook/master/docs/pics/iis.png)
+
+![iis]((https://raw.githubusercontent.com/trondhindenes/Rough-Massive-Hook/master/docs/pics/iis.png) "IIS")
 
 In contrast to a "classic" IIS-based setup, there's no need for IT/Ops to know exactly which server hosts a specific app. 
 Utilizing the same service discovery model as container-based setups use, it's possible to completely abstract away the task of manually deciding
