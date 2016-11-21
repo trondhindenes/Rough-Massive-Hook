@@ -8,7 +8,7 @@ without actually using any container service in the app layer.
 ## What does this mean? 
 Here's a simple container-based infrastructure:
 
-![containers](https://raw.githubusercontent.com/trondhindenes/Rough-Massive-Hook/master/docs/pics/containers.png "Containers")
+![containers](https://raw.githubusercontent.com/trondhindenes/Rough-Massive-Hook/master/docs/pics/containers.png?raw=true "Containers")
 
 Containerized apps (aka microservice instances) run on one or several container hosts. Client traffic is automatically distributed
 to the right container using a load balancer in front of the container cluster. Some setups use a load balancer which is running on each 
@@ -21,7 +21,7 @@ system such as Consul or etcd.
 Rough Massive Hook takes the same approach, with a few key differences:
 Firstly, since containers are not used IIS web apps serve as microservices, running on one or multiple hosts:
 
-![iis]((https://raw.githubusercontent.com/trondhindenes/Rough-Massive-Hook/master/docs/pics/iis.png) "IIS")
+![iis](https://github.com/trondhindenes/Rough-Massive-Hook/blob/master/docs/pics/iis.png?raw=true "IIS")
 
 In contrast to a "classic" IIS-based setup, there's no need for IT/Ops to know exactly which server hosts a specific app. 
 Utilizing the same service discovery model as container-based setups use, it's possible to completely abstract away the task of manually deciding
@@ -40,19 +40,20 @@ will fit. Rough Massive Hook implements its own service ("LoneJupiter"), which p
 All in all, this setup allows a very flexible setup where the number of hosts (IIS Servers) are dictated by the needed compute resources, and not app isolation.
 App placement (the which app goes where) is abstracted away using tags and optionally weigthing.
 
-##The example app allows:
+## The example app allows:
 - Canary Deployments: Send 5% of the traffic bound to /api/v1 to an app running a newer version.
 - A/B testing: Send 20% of the traffic bound for /api/v1 to an app running a build from the "devel" branch of the app.
-- Api versioning: requests for api/v1 should be sent to version 1.0.0 of the app, while requests for api/v2 should be sent to a newer version of the same app.
-- Prod and test apps on the same server
+- Url-based Api versioning: requests for api/v1 should be sent to version 1.0.0 of the app, while requests for api/v2 should be sent to a newer version of the same app.
+- Header-based Api versioning: requests containing request header "x-api-version: 1.2.3" should be sent to the corresponding version of the app
+- Prod and test apps on the same IIS Host server (allowing higher-density servers than typical)
 
 
-#Deployment pipeline/process:
-Given an ApplicationMap where instancecount is changed from 2 to 3, LoneJupiter attempts to find the most suitable node for the new instance.
-This placement is done using tag matching, although other mechanisms can easily be implemented. LoneJupiter attempts to spread an app on as many IIS hosts as possible, but allows a single hosts to run multiple instances if it has to.
-The result of the placement process is a new "deployment" with status "pending", meaning the actual app hasn't been deployed yet.
-The server targeted in the deployment is then instructed to download the required artifact and instal it. Upon installation, the IIS hosts's Consul config folder is updated with the added instance
-The Load Balancing system picks up the added service instance when Consul receives a "green" healthcheck from the service, and traffic starts flowing to the instance.
+# Deployment pipeline/process:
+1. Given an ApplicationMap where instancecount is changed from 2 to 3, LoneJupiter attempts to find the most suitable node for the new instance.
+2. This placement is done using tag matching, although other mechanisms can easily be implemented. LoneJupiter attempts to spread an app on as many IIS hosts as possible, but allows a single hosts to run multiple instances if it has to.
+3. The result of the placement process is a new "deployment" with status "pending", meaning the actual app hasn't been deployed yet.
+4. The server targeted in the deployment is then instructed to download the required artifact and instal it. Upon installation, the IIS hosts's Consul config folder is updated with the added instance
+5. The Load Balancing system picks up the added service instance when Consul receives a "green" healthcheck from the service, and traffic starts flowing to the instance.
 
 
 
