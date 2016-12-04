@@ -1,15 +1,34 @@
 import rethinkdb as r
 from flask_restful import Resource, Api, request
-from lone_jupiter import app, appconfig, api
+from lone_jupiter import app, appconfig, api, reqparse
 from helpers.rethinkdb_helper import RethinkDbHelper
+from models.Artifact import Artifact
 
 rethinkdb_host = appconfig['rethinkdb_host']
 rethinkdb_port = appconfig['rethinkdb_port']
 rethinkdb_db = appconfig['rethinkdb_db']
 
+artifact_fields = Artifact.artifact_fields
+
 class ApiArtifact(Resource):
-    def get(self):
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('commit_id', type=str, location='json')
+        self.reqparse.add_argument('package_name', type=str, location='json')
+        self.reqparse.add_argument('package_version', type=str, location='json')
+        self.reqparse.add_argument('branch_name', type=str, location='json')
+        self.reqparse.add_argument('commit_author', type=str, location='json')
+        self.reqparse.add_argument('commit_message', type=str, location='json')
+        self.reqparse.add_argument('artifact_url', type=str, location='json')
+        self.reqparse.add_argument('package_name', type=str, location='json')
+        self.reqparse.add_argument('artifact_type', type=str, location='json')
+        super(ApiArtifact, self).__init__()
+
         r.connect(rethinkdb_host, rethinkdb_port).repl()
+
+
+    def get(self):
+
         RethinkDbHelper.ensure_database_and_table(rethinkdb_host, rethinkdb_port, rethinkdb_db, "artifacts")
 
         keys = r.db(rethinkdb_db).table("artifacts").run()
@@ -23,7 +42,6 @@ class ApiArtifact(Resource):
     def post(self):
         artifact = request.get_json(force=True)
         RethinkDbHelper.ensure_database_and_table(rethinkdb_host, rethinkdb_port, rethinkdb_db, "artifacts")
-        r.connect(rethinkdb_host, rethinkdb_port).repl()
         try:
             insert_obj = {
                 "commit_id": artifact['commit_id'],
