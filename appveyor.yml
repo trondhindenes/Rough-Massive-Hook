@@ -2,7 +2,7 @@ version: 0.1.{build}
 
 
 environment:
-  LONE_JUPITER_URL: http://ec2-54-93-41-146.eu-central-1.compute.amazonaws.com
+  LONE_JUPITER_URL: http://ec2-54-93-47-65.eu-central-1.compute.amazonaws.com
   STORAGE_KEY:
     secure: kyOBWvm3rih+H77im8bUIx8wNM3GPXt49po/QEsVQ1u29IendG29lFULUYp0InWuJSt9NjWN3YO698ADnTYN5M0AdtkfqTz9QCJRqhS9d9/10TsunaGmNDG4pnHHxXL0
   STORAGE_NAME:
