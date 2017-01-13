@@ -21,7 +21,7 @@ class ApiDeploymentSelector(Resource):
         r.connect(rethinkdb_host, rethinkdb_port).repl()
         RethinkDbHelper.ensure_database_and_table(rethinkdb_host, rethinkdb_port, rethinkdb_db, appmaps_table)
 
-        keys = r.db(rethinkdb_db).table(appmaps_table).run()
+        keys = r.db(rethinkdb_db).table(appmaps_table).filter({'name':appmap_name}).run()
         db_appmaps = list(keys)
 
         if db_appmaps.__len__() == 0:
